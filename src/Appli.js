@@ -1,6 +1,6 @@
 import { createScene } from './scene/createScene.js';
 import { animate } from './scene/animation.js';
-import { setupVRButton } from './scene/btnVR.js';
+import { setupVRButton } from './scene/VRButton.js';
 import { handleResize } from './scene/fenetre.js';
 
 // Initialize the scene
