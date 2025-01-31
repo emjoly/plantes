@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { setupControllers } from './controllers.js';
+import { setupInteractions } from './interactions.js';
 
 export function createScene() {
   // Create scene
@@ -27,10 +29,18 @@ export function createScene() {
   // Add lights
   addLights(scene);
 
+  // bouger camera
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;  // Activer le damping pour une interaction plus fluide
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
+  const controllers = setupControllers(renderer, scene);
+  setupInteractions(scene, controllers);
+  
   return { scene, camera, renderer };
 }
+
+
+
+// erreur avec le materiel surement
