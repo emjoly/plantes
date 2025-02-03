@@ -1,11 +1,11 @@
-export function handleResize(camera, renderer) {
-    window.addEventListener('resize', () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-  
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    });
-  }
-  
+import { camera, renderer, scene } from './createScene.js';
+
+export function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+export function animate() {
+  renderer.render(scene, camera);
+}

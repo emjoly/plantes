@@ -1,29 +1,31 @@
 import * as THREE from 'three';
 import { addLights } from '../utils/lumiere.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { setupControllers } from './controllers.js';
-import { setupInteractions } from './interactions.js';
+
+export let scene, camera, renderer;
 
 export function createScene() {
   // Create scene
-  const scene = new THREE.Scene();
+  scene = new THREE.Scene();
   scene.background = new THREE.Color(0x202040);
 
   // Create camera
-  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.set(0, 0, 2);  
   // je dois me mettre plus haut apres en y pour la vr / la rotate?
 
   // Create renderer
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
   renderer.xr.enabled = true;
-  document.body.appendChild(renderer.domElement);
 
   // Add objects
   const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-  const material = new THREE.MeshNormalMaterial();
+  const material = new THREE.MeshNormalMaterial({ transparent: true, opacity: 1 }); // Ajouter la transparence
   const cube = new THREE.Mesh(geometry, material);
+  cube.name = 'cube'; // affichage du texte
+  cube.userData.isAnimating = true; // Ajout pour contrôler l'animation
   scene.add(cube);
 
   // Add lights
@@ -35,10 +37,13 @@ export function createScene() {
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
-  const controllers = setupControllers(renderer, scene);
-  setupInteractions(scene, controllers);
+  // // Configurer contrôleurs VR
+  // const controllers = setupControllers(renderer, scene);
+
+  // // Passer renderer à setupInteractions
+  // setupInteractions(scene, controllers, renderer, camera);
   
-  return { scene, camera, renderer };
+  // return { scene, camera, renderer };
 }
 
 

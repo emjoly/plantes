@@ -1,16 +1,12 @@
-import { createScene } from './scene/createScene.js';
-import { animate } from './scene/animation.js';
-import { setupVRButton } from './scene/VRButton.js';
-import { handleResize } from './scene/fenetre.js';
+import { createScene, renderer, camera, scene } from './scene/createScene.js';
+import { initControls, controller1, controller2 } from './scene/controllers.js';
+import { cube } from './utils/cube.js';
+import { onWindowResize, animate } from './scene/fenetre.js';
 
-// Initialize the scene
-const { scene, camera, renderer, cube } = createScene();
-
-// Set up WebXR
-setupVRButton(renderer);
-
-// Handle window resizing
-handleResize(camera, renderer);
-
-// Start animation loop
+createScene();
+initControls();
 animate(scene, camera, renderer, cube);
+window.addEventListener('resize', onWindowResize);
+renderer.setAnimationLoop(animate);
+
+document.body.appendChild(renderer.domElement);
