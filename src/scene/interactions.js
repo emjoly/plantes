@@ -1,98 +1,66 @@
 import * as THREE from 'three';
+import { scene, renderer } from './createScene.js';
+import { getGroup } from './createScene.js'; // Importer `getGroup()`
+import { controller1, controller2 } from './controllers.js';
 
-export function setupInteractions(scene, controllers, renderer, camera) {
-  const raycaster = new THREE.Raycaster();
-  // stocker l’objet actuellement survolé
-  let hoveredObject = null;
-  
-  function getIntersections(controller) {
-    controller.updateMatrixWorld();
-    raycaster.setFromXRController(controller);
-    const intersections = raycaster.intersectObjects(scene.children, false);
+const raycaster = new THREE.Raycaster();
+const intersected = [];
 
-    function applyHoverEffect(object, isHovering) {
-      if (object) {
-        object.material.opacity = isHovering ? 0.5 : 1; // Appliquer la transparence au survol
-      }
-    }
+export function getIntersections(controller) {
+  controller.updateMatrixWorld();
+  raycaster.setFromMatrixPosition(controller.matrixWorld);
+  return raycaster.intersectObjects(getGroup().children, false); // Utilisation de getGroup()
+}
 
-    if (intersections.length > 0) {
-      if (hoveredObject !== intersections[0].object) {
-        if (hoveredObject) hoveredObject.material.opacity = 1; // Rétablir l'opacité normale
-        hoveredObject = intersections[0].object;
-        hoveredObject.material.transparent = true;
-        hoveredObject.material.opacity = 0.5; // Appliquer l'effet translucide
-      }
-    } else if (hoveredObject) {
-      hoveredObject.material.opacity = 1; // Restaurer l'opacité normale quand on quitte
-      hoveredObject = null;
-    }
-  
-    return intersections;
+export function handleSelectStart(event) {
+  const controller = event.target;
+  const intersections = getIntersections(controller);
+
+  if (intersections.length > 0) {
+    const object = intersections[0].object;
+    object.material.emissive.set(0x0000ff); // Bleu quand sélectionné
+    controller.attach(object);
+    controller.userData.selected = object;
   }
+}
 
-  function onSelectStart(event) {
-    const controller = event.target;
-    const intersections = getIntersections(controller);
+export function handleSelectEnd(event) {
+  const controller = event.target;
 
-    if (intersections.length > 0 && intersections[0].object.isMesh) {
-      const object = intersections[0].object;
-
-      controller.attach(object);
-      controller.userData.selected = object;
-
-      // Désactiver l'animation pendant qu'il est sélectionné
-      object.userData.isAnimating = false;
-
-      // Afficher un message si l'objet est le cube
-      // if (object.name === 'cube') {  
-      //   showText('Ceci est un cube!', { x: window.innerWidth / 2, y: window.innerHeight / 2 });
-      // }
-    }
+  if (controller.userData.selected) {
+    const object = controller.userData.selected;
+    object.material.emissive.set(0x000000); // Remettre la couleur initiale
+    getGroup().attach(object); // Utilisation de getGroup()
+    controller.userData.selected = undefined;
   }
+}
 
-  function onSelectEnd(event) {
-    const controller = event.target;
+function intersectObjects(controller) {
+  if (controller.userData.selected) return;
 
-    if (controller.userData.selected) {
+  const line = controller.getObjectByName('line');
+  const intersections = getIntersections(controller);
 
-      scene.attach(controller.userData.selected);
-      // Réactiver l'animation de l'objet
-      controller.userData.selected.userData.isAnimating = true;
-
-      controller.userData.selected = undefined;
-    }
-  }
-
-  function onHover(event) {
-    const controller = event.target;
-    const intersections = getIntersections(controller);
-
-    if (intersections.length > 0) {
-      const object = intersections[0].object;
-      if (hoveredObject !== object) {
-        applyHoverEffect(hoveredObject, false); // Réinitialiser l'ancien objet
-        hoveredObject = object;
-        applyHoverEffect(hoveredObject, true);
-      }
-    } else if (hoveredObject) {
-      applyHoverEffect(hoveredObject, false);
-      hoveredObject = null;
-    }
-  }
-
-  controllers.forEach(controller => {
-    controller.addEventListener('selectstart', onSelectStart);
-    controller.addEventListener('selectend', onSelectEnd);
-    controller.addEventListener('squeezestart', onHover); // Détection du survol avec un squeeze
-  });
-
-  if (renderer) {
-    renderer.setAnimationLoop(() => {
-      controllers.forEach(controller => onHover({ target: controller })); // Vérifier le survol en continu
-      renderer.render(scene, camera);
-    });
+  if (intersections.length > 0) {
+    const object = intersections[0].object;
+    object.material.emissive.set(0xff0000); // Rouge quand hover
+    intersected.push(object);
+    line.scale.z = intersections[0].distance;
   } else {
-    console.error("Renderer is undefined before setAnimationLoop");
+    line.scale.z = 5;
   }
+}
+
+function cleanIntersected() {
+  while (intersected.length) {
+    const object = intersected.pop();
+    object.material.emissive.set(0x000000);
+  }
+}
+
+export function animate() {
+  cleanIntersected();
+  intersectObjects(controller1);
+  intersectObjects(controller2);
+  renderer.render(scene, camera);
 }

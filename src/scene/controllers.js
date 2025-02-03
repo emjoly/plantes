@@ -22,3 +22,13 @@ export function initControls() {
     controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
     scene.add(controllerGrip2);
 }
+
+export function getControllers() {
+    if (!controller1 || !controller2) {
+        throw new Error("Les contrôleurs ne sont pas encore initialisés ! Appelez `initControls()` d'abord.");
+    }
+    return { controller1, controller2 };
+}
+
+// composer pour effet
+// interaction manager pour cliquer

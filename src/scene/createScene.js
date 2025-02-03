@@ -1,7 +1,11 @@
 import * as THREE from 'three';
 import { addLights } from '../utils/lumiere.js';
+import { OrbitControls } from 'three/examples/jsm/Addons.js';
+import { handleSelectStart, handleSelectEnd } from './interactions.js';
+import { initControls, getControllers } from './controllers.js';
 
 export let scene, camera, renderer;
+let group;
 
 export function createScene() {
   // Create scene
@@ -19,14 +23,11 @@ export function createScene() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
   renderer.xr.enabled = true;
+  document.body.appendChild(renderer.domElement);
 
-  // Add objects
-  const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-  const material = new THREE.MeshNormalMaterial({ transparent: true, opacity: 1 }); // Ajouter la transparence
-  const cube = new THREE.Mesh(geometry, material);
-  cube.name = 'cube'; // affichage du texte
-  cube.userData.isAnimating = true; // Ajout pour contrôler l'animation
-  scene.add(cube);
+  // groupe pour les objets interactifs
+  group = new THREE.Group();
+  scene.add(group);
 
   // Add lights
   addLights(scene);
@@ -37,15 +38,27 @@ export function createScene() {
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
-  // // Configurer contrôleurs VR
-  // const controllers = setupControllers(renderer, scene);
-
-  // // Passer renderer à setupInteractions
-  // setupInteractions(scene, controllers, renderer, camera);
-  
-  // return { scene, camera, renderer };
+   // Initialiser les contrôleurs VR
+   initControls();
+    
+   // Attendre que les contrôleurs soient prêts
+   try {
+       const { controller1, controller2 } = getControllers();
+       
+       controller1.addEventListener('selectstart', handleSelectStart);
+       controller1.addEventListener('selectend', handleSelectEnd);
+       controller2.addEventListener('selectstart', handleSelectStart);
+       controller2.addEventListener('selectend', handleSelectEnd);
+   } catch (error) {
+       console.error(error.message);
+   }
 }
 
-
-
-// erreur avec le materiel surement
+// Fonction pour récupérer `group`
+export function getGroup() {
+  if (!group) {
+    throw new Error("Le groupe n'est pas encore initialisé !");
+  }
+  return group;
+}
+createScene();

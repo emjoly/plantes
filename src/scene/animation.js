@@ -1,3 +1,9 @@
+import * as THREE from 'three';
+
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
+let hoveredObject = null;
+
 export function animate(scene, camera, renderer) {
   renderer.setAnimationLoop(() => {
     scene.traverse((child) => {
