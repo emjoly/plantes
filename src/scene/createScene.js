@@ -3,9 +3,9 @@ import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 import { handleSelectStart, handleSelectEnd } from './interactions.js';
 import { initControls, getControllers } from './controllers.js';
+import { getGroup } from '../utils/objets.js'; // Importer `getGroup()`
 
 export let scene, camera, renderer;
-let group;
 
 export function createScene() {
   // Create scene
@@ -26,8 +26,7 @@ export function createScene() {
   document.body.appendChild(renderer.domElement);
 
   // groupe pour les objets interactifs
-  group = new THREE.Group();
-  scene.add(group);
+  scene.add(getGroup());
 
   // Add lights
   addLights(scene);
@@ -40,7 +39,7 @@ export function createScene() {
 
    // Initialiser les contrôleurs VR
    initControls();
-    
+
    // Attendre que les contrôleurs soient prêts
    try {
        const { controller1, controller2 } = getControllers();
@@ -54,11 +53,4 @@ export function createScene() {
    }
 }
 
-// Fonction pour récupérer `group`
-export function getGroup() {
-  if (!group) {
-    throw new Error("Le groupe n'est pas encore initialisé !");
-  }
-  return group;
-}
 createScene();

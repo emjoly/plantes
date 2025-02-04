@@ -6,22 +6,27 @@ import { scene, renderer } from './createScene.js';
 export let controller1, controller2;
 
 export function initControls() {
-    document.body.appendChild(XRButton.createButton(renderer));
+    return new Promise((resolve) => {
+        document.body.appendChild(XRButton.createButton(renderer));
 
-    controller1 = renderer.xr.getController(0);
-    controller2 = renderer.xr.getController(1);
-    scene.add(controller1, controller2);
+        controller1 = renderer.xr.getController(0);
+        controller2 = renderer.xr.getController(1);
+        scene.add(controller1, controller2);
 
-    const controllerModelFactory = new XRControllerModelFactory();
-    
-    const controllerGrip1 = renderer.xr.getControllerGrip(0);
-    controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
-    scene.add(controllerGrip1);
+        const controllerModelFactory = new XRControllerModelFactory();
 
-    const controllerGrip2 = renderer.xr.getControllerGrip(1);
-    controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
-    scene.add(controllerGrip2);
+        const controllerGrip1 = renderer.xr.getControllerGrip(0);
+        controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
+        scene.add(controllerGrip1);
+
+        const controllerGrip2 = renderer.xr.getControllerGrip(1);
+        controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
+        scene.add(controllerGrip2);
+
+        resolve(); // Indique que les contrôleurs sont prêts
+    });
 }
+
 
 export function getControllers() {
     if (!controller1 || !controller2) {

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { scene, renderer } from './createScene.js';
-import { getGroup } from './createScene.js'; // Importer `getGroup()`
+import { getGroup } from '../utils/objets.js';
 import { controller1, controller2 } from './controllers.js';
 
 const raycaster = new THREE.Raycaster();
@@ -8,7 +8,11 @@ const intersected = [];
 
 export function getIntersections(controller) {
   controller.updateMatrixWorld();
-  raycaster.setFromMatrixPosition(controller.matrixWorld);
+  const controllerPosition = controller.position;
+  const controllerDirection = new THREE.Vector3(0, 0, -1).applyQuaternion(controller.quaternion).normalize();
+
+  raycaster.ray.origin.copy(controllerPosition);
+  raycaster.ray.direction.copy(controllerDirection);
   return raycaster.intersectObjects(getGroup().children, false); // Utilisation de getGroup()
 }
 
@@ -18,7 +22,7 @@ export function handleSelectStart(event) {
 
   if (intersections.length > 0) {
     const object = intersections[0].object;
-    object.material.emissive.set(0x0000ff); // Bleu quand sélectionné
+    // object.material.emissive.set(0x0000ff); // Bleu quand sélectionné
     controller.attach(object);
     controller.userData.selected = object;
   }
@@ -41,8 +45,11 @@ function intersectObjects(controller) {
   const line = controller.getObjectByName('line');
   const intersections = getIntersections(controller);
 
+  cleanIntersected();
+
   if (intersections.length > 0) {
     const object = intersections[0].object;
+    
     object.material.emissive.set(0xff0000); // Rouge quand hover
     intersected.push(object);
     line.scale.z = intersections[0].distance;
