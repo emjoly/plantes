@@ -3,9 +3,10 @@ import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
 import { handleSelectStart, handleSelectEnd } from './interactions.js';
 import { initControls, getControllers } from './controllers.js';
-import { getGroup } from '../utils/objets.js'; // Importer `getGroup()`
+import { getGroup } from '../utils/objets.js';
+import { animate } from './animation.js';
 
-export let scene, camera, renderer;
+export let scene, camera, renderer, controls;
 
 export function createScene() {
   // Create scene
@@ -14,7 +15,8 @@ export function createScene() {
 
   // Create camera
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 2);  
+  camera.position.set(0, 1.6, 2);
+  camera.lookAt(0, 0, 0);  // Regarder vers le cube  
   // je dois me mettre plus haut apres en y pour la vr / la rotate?
 
   // Create renderer
@@ -22,7 +24,8 @@ export function createScene() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
-  renderer.xr.enabled = true;
+    //a false pour désactiver webXR
+  renderer.xr.enabled = false; 
   document.body.appendChild(renderer.domElement);
 
   // groupe pour les objets interactifs
@@ -32,8 +35,8 @@ export function createScene() {
   addLights(scene);
 
   // bouger camera
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;  // Activer le damping pour une interaction plus fluide
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = false;  // Activer le damping pour une interaction plus fluide
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
@@ -54,3 +57,4 @@ export function createScene() {
 }
 
 createScene();
+animate(scene, camera, renderer);

@@ -1,4 +1,4 @@
-import { camera, renderer, scene } from './createScene.js';
+import { camera, renderer, scene, controls } from './createScene.js';
 
 export function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -6,6 +6,10 @@ export function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+// Fonction d'animation, qui fonctionne pour **les deux modes (normal & VR)**
 export function animate() {
-  renderer.render(scene, camera);
+    if (!renderer.xr.isPresenting) {
+        controls.update(); // Mise à jour des contrôles OrbitControls (hors VR)
+    }
+    renderer.render(scene, camera);
 }
