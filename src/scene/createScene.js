@@ -17,15 +17,11 @@ export function createScene() {
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.set(0, 1.6, 2);
   camera.lookAt(0, 0, 0);  // Regarder vers le cube  
-  // je dois me mettre plus haut apres en y pour la vr / la rotate?
 
   // Create renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = true;
-    //a false pour désactiver webXR
-  renderer.xr.enabled = false; 
+  renderer.xr.enabled = true; 
   document.body.appendChild(renderer.domElement);
 
   // groupe pour les objets interactifs
@@ -34,9 +30,9 @@ export function createScene() {
   // Add lights
   addLights(scene);
 
-  // bouger camera
+  // bouger camera en webGL
   controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = false;  // Activer le damping pour une interaction plus fluide
+  controls.enableDamping = true;  // Activer le damping pour une interaction plus fluide
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
