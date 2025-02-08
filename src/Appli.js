@@ -1,29 +1,17 @@
-import { createScene, renderer, camera, scene } from './scene/createScene.js';
-import { initControls } from './scene/controllers.js';
-import { onWindowResize, animate } from './scene/fenetre.js';
-import { XRButton } from 'three/addons/webxr/XRButton.js';
 
-// Création de la scène
-createScene();
+import { createScene } from './scene/createScene.js';
+import { animate } from './scene/animation.js';
+import { setupVRButton } from './scene/VRButton.js';
+import { handleResize } from './scene/fenetre.js';
 
-// Ajout du bouton WebXR après le rendu classique
-document.body.appendChild(XRButton.createButton(renderer));
+// Initialize the scene
+const { scene, camera, renderer, cube } = createScene();
 
-// Démarrage des contrôles XR
-initControls().then(() => {
-    renderer.xr.enabled = true; // Activer WebXR uniquement après l'init des contrôleurs
-    renderer.setAnimationLoop(animate);
-});
+// Set up WebXR
+setupVRButton(renderer);
 
-// Boucle de rendu normale avant d’activer WebXR
-function normalRenderLoop() {
-    if (!renderer.xr.isPresenting) {
-        animate();
-    }
-    requestAnimationFrame(normalRenderLoop);
-}
+// Handle window resizing
+handleResize(camera, renderer);
 
-normalRenderLoop(); // Démarrer le rendu normal
-
-// Écouteur pour le redimensionnement de la fenêtre
-window.addEventListener('resize', onWindowResize);
+// // Start animation loop
+animate(scene, camera, renderer, cube);
