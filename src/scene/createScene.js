@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { loadModel } from '../utils/objets.js';
 
 export function createScene() {
   // Create scene
@@ -26,10 +27,38 @@ export function createScene() {
   // Add lights
   addLights(scene);
 
+  // orbit controls cam
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;  // Activer le damping pour une interaction plus fluide
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
+
+  const radius = 5; // Rayon du cercle
+  const modelsToLoad = [
+    'ficus',
+    'livistona_chinensis',
+    'pilea_peperomioides',
+    'pothos',
+    'rhyzome',
+    'rosa_chinensis'
+  ].map((name, index, array) => {
+  const angle = (index / array.length) * Math.PI * 2; // Angle en radians
+  return {
+    name,
+    position: new THREE.Vector3(
+      Math.cos(angle) * radius, // x position
+      0,                        // y reste à 0
+      Math.sin(angle) * radius  // z position
+    )
+  };
+  });
+
+  // Charger les modèles
+  modelsToLoad.forEach(({ name, position }) => {
+    loadModel(scene, name, position, (obj) => {
+      console.log(`${name} ajouté à la scène`, position);
+    });
+  });
 
   return { scene, camera, renderer };
 }
