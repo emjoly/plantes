@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { loadModel } from '../utils/objets.js';
+import { createPlancher } from './plancher.js';
 
 export function createScene() {
   // Create scene
@@ -23,6 +24,10 @@ export function createScene() {
   const material = new THREE.MeshNormalMaterial();
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
+
+  // Add floor
+  const floor = createPlancher();
+  scene.add(floor);
 
   // Add lights
   addLights(scene);
