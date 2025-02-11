@@ -36,5 +36,5 @@ export function createPlancher() {
     floor.rotation.x = -Math.PI / 2; // Met à plat
     floor.position.y = -0.01; // Juste en dessous des objets
 
-    return floor; // Retourne le plancher pour l'ajouter à la scène
+    return floor;
 }
