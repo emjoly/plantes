@@ -74,7 +74,17 @@ export function createScene() {
       // ce model etait trop gros
       if (name === 'rosa_chinensis') {
         obj.scale.set(0.15, 0.15, 0.15);
-        obj.position.set(1.5000000000000004, -0.35, -2.598076211353316);
+        obj.position.set(1.5000000000000004, -0.34, -2.598076211353316);
+      }
+      // trop petit
+      if (name === 'pothos') {
+        obj.scale.set(2, 2, 2);
+        obj.position.set(-3, 0, 3.6739403974420594e-16);
+      }
+      // trop petit
+      if (name === 'ficus') {
+        obj.scale.set(2, 2, 2);
+        obj.position.set(3, 0, 0);
       }
       console.log(`${name} ajouté à la scène`, position);
     });
