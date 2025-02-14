@@ -1,21 +1,16 @@
-// loadingManager.js
-import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { loadingManager } from '../utils/loading.js';
 
-// Créer un gestionnaire de chargement personnalisé
-export const loadingManager = new THREE.LoadingManager();
-
-loadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
-  console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-};
-
-loadingManager.onLoad = function () {
-  console.log('Loading Complete!');
-};
-
-loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
-  console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-};
-
-loadingManager.onError = function (url) {
-  console.log('There was an error loading ' + url);
-};
+export function loadModel(scene, modelPath) {
+  const loader = new GLTFLoader(loadingManager);
+  loader.load(
+    modelPath,
+    (gltf) => {
+      scene.add(gltf.scene);
+    },
+    undefined,
+    (error) => {
+      console.error('Erreur de chargement du modèle : ', error);
+    }
+  );
+}
