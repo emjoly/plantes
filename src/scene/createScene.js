@@ -3,7 +3,6 @@ import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createSkybox } from '../utils/skybox.js';
 import { loadModel } from '../utils/objets.js';
-import { createPlancher } from './plancher.js';
 
 export function createScene() {
   // Create scene
@@ -26,10 +25,6 @@ export function createScene() {
   // const material = new THREE.MeshNormalMaterial();
   // const cube = new THREE.Mesh(geometry, material);
   // scene.add(cube);
-
-  // Add floor
-  // const floor = createPlancher();
-  // scene.add(floor);
 
   // Add lights
   addLights(scene);
@@ -57,15 +52,15 @@ export function createScene() {
     'rhyzome',
     'rosa_chinensis'
   ].map((name, index, array) => {
-  const angle = (index / array.length) * Math.PI * 2; // Angle en radians
-  return {
-    name,
-    position: new THREE.Vector3(
-      Math.cos(angle) * radius, // x position
-      0,                        // y reste à 0
-      Math.sin(angle) * radius  // z position
-    )
-  };
+    const angle = (index / array.length) * Math.PI * 2; // Angle en radians
+    return {
+      name,
+      position: new THREE.Vector3(
+        Math.cos(angle) * radius, // x position
+        0,                        // y reste à 0
+        Math.sin(angle) * radius  // z position
+      )
+    };
   });
 
   // Charger les modèles
