@@ -3,6 +3,8 @@ import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createSkybox } from '../utils/skybox.js';
 import { loadModel } from '../utils/objets.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 
 export function createScene() {
   // Create scene
@@ -19,6 +21,10 @@ export function createScene() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true;
   document.body.appendChild(renderer.domElement);
+
+  // Post-processing
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
 
   // Add objects
   // const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
@@ -85,5 +91,5 @@ export function createScene() {
     });
   });
 
-  return { scene, camera, renderer };
+  return { scene, camera, renderer, composer };
 }

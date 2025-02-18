@@ -3,11 +3,12 @@ import { animate } from './scene/animation.js';
 import { createSkybox } from './utils/skybox.js';
 import { setupVRButton } from './scene/VRButton.js';
 import { handleResize } from './scene/fenetre.js';
-import { handleObjectSelection } from './scene/selection.js';
+// import { handleObjectSelection } from './scene/selection.js';
+import { setupOutlinePass } from './postprocessing/outlinePass.js';
 import * as THREE from 'three';
 
 // Initialize the scene
-const { scene, camera, renderer, cube } = createScene();
+const { scene, camera, renderer, composer, cube } = createScene();
 
 // Ajouter la skybox
 createSkybox(scene);
@@ -15,11 +16,11 @@ createSkybox(scene);
 // Set up WebXR
 setupVRButton(renderer);
 
+// outline pass
+const outlinePass = setupOutlinePass(scene, camera, composer);
+
 // Handle window resizing
 handleResize(camera, renderer);
 
-// Écouteur pour la sélection d'objets
-window.addEventListener('click', (event) => handleObjectSelection(event, camera, scene));
-
-// // Start animation loop
+// Start animation loop
 animate(scene, camera, renderer, cube);

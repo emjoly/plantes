@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { XRButton } from 'three/addons/webxr/XRButton.js';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
-import { scene, renderer } from './createScene.js';
+import { scene, renderer, createScene } from './createScene.js';
 
+const { scene, renderer } = createScene();
 export let controller1, controller2;
 
 export function initControls() {
