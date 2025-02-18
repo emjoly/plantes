@@ -1,17 +1,17 @@
 import * as THREE from 'three';
 import { XRButton } from 'three/addons/webxr/XRButton.js';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
-import { scene, renderer, createScene } from './createScene.js';
+import { createScene } from './createScene.js';
 
-const { scene, renderer } = createScene();
+// const { scene, renderer } = createScene();
 export let controller1, controller2;
 
-export function initControls() {
-    return new Promise((resolve) => {
+export function setupControllers(renderer, scene) {
+    // return new Promise((resolve) => {
         document.body.appendChild(XRButton.createButton(renderer));
 
-        controller1 = renderer.xr.getController(0);
-        controller2 = renderer.xr.getController(1);
+        const controller1 = renderer.xr.getController(0);
+        const controller2 = renderer.xr.getController(1);
         scene.add(controller1, controller2);
 
         const controllerModelFactory = new XRControllerModelFactory();
@@ -24,8 +24,8 @@ export function initControls() {
         controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
         scene.add(controllerGrip2);
 
-        resolve(); // Indique que les contrôleurs sont prêts
-    });
+        return{ controller1, controller2 }; 
+    // });
 }
 
 

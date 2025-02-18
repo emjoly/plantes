@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { scene, renderer } from './createScene.js';
-import { getGroup } from '../utils/objets.js';
+import { scene, renderer, modelsToLoad } from './createScene.js';
 import { controller1, controller2 } from './controllers.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'; 
 
 const raycaster = new THREE.Raycaster();
 const intersected = [];
@@ -13,7 +13,7 @@ export function getIntersections(controller) {
 
   raycaster.ray.origin.copy(controllerPosition);
   raycaster.ray.direction.copy(controllerDirection);
-  return raycaster.intersectObjects(getGroup().children, false); // Utilisation de getGroup()
+  return raycaster.intersectObjects(modelsToLoad.map(model => model.position), false);
 }
 
 export function handleSelectStart(event) {

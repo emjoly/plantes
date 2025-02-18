@@ -3,8 +3,10 @@ import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createSkybox } from '../utils/skybox.js';
 import { loadModel } from '../utils/objets.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+// import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { setupControllers } from './controllers.js';
+import { setupInteractions } from './interactions.js';
 
 export function createScene() {
   // Create scene
@@ -22,9 +24,13 @@ export function createScene() {
   renderer.xr.enabled = true;
   document.body.appendChild(renderer.domElement);
 
+  // manettes vr
+  const { controller1, controller2 } = setupControllers(renderer, scene);
+  // setupInteractions(scene, controllers);
+
   // Post-processing
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
+  // const composer = new EffectComposer(renderer);
+  // composer.addPass(new RenderPass(scene, camera));
 
   // Add objects
   // const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
@@ -32,7 +38,7 @@ export function createScene() {
   // const cube = new THREE.Mesh(geometry, material);
   // scene.add(cube);
 
-  // Add lights
+  // Add lumieres
   addLights(scene);
 
   // orbit controls cam
@@ -41,6 +47,7 @@ export function createScene() {
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
+  // modele du magasin
   const room = 'store_in_the_mall';
   const roomPosition = new THREE.Vector3(-2.5, 0, -5); // Centre de la scène
   const roomScale = 0.03; // Facteur de réduction (10% de la taille d'origine)
@@ -49,6 +56,7 @@ export function createScene() {
     console.log(`${room} ajouté à la scène`, roomPosition);
   });
 
+  // placer modeles des plantes
   const radius = 3; // Rayon du cercle
   const modelsToLoad = [
     'ficus',
@@ -91,5 +99,6 @@ export function createScene() {
     });
   });
 
-  return { scene, camera, renderer, composer };
+  return { scene, camera, renderer, modelsToLoad };
+  // modelsToLoad veut pas export.... est-ce que c'est pcq cest un array???
 }
