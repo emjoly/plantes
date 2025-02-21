@@ -3,14 +3,16 @@ import { addLights } from '../utils/lumiere.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { createSkybox } from '../utils/skybox.js';
 import { loadModel } from '../utils/objets.js';
-// import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { setupControllers } from './controllers.js';
 import { setupInteractions } from './interactions.js';
 
+export let modelsToLoad = [];
+export let renderer;
+export let scene;
+
 export function createScene() {
   // Create scene
-  const scene = new THREE.Scene();
+  scene = new THREE.Scene();
 
   // Create camera
   const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -26,17 +28,7 @@ export function createScene() {
 
   // manettes vr
   const { controller1, controller2 } = setupControllers(renderer, scene);
-  // setupInteractions(scene, controllers);
-
-  // Post-processing
-  // const composer = new EffectComposer(renderer);
-  // composer.addPass(new RenderPass(scene, camera));
-
-  // Add objects
-  // const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-  // const material = new THREE.MeshNormalMaterial();
-  // const cube = new THREE.Mesh(geometry, material);
-  // scene.add(cube);
+  setupInteractions(controller1, controller2, scene);
 
   // Add lumieres
   addLights(scene);
@@ -58,7 +50,7 @@ export function createScene() {
 
   // placer modeles des plantes
   const radius = 3; // Rayon du cercle
-  const modelsToLoad = [
+  modelsToLoad = [
     'ficus',
     'livistona_chinensis',
     'pilea_peperomioides',
@@ -80,6 +72,8 @@ export function createScene() {
   // Charger les modèles
   modelsToLoad.forEach(({ name, position }) => {
     loadModel(scene, name, position, (obj) => {
+      // obj.userData.description = `Ceci est une plante: ${name}`;
+      // obj.name = name;
       // ce model etait trop gros
       if (name === 'rosa_chinensis') {
         obj.scale.set(0.15, 0.15, 0.15);
@@ -99,6 +93,5 @@ export function createScene() {
     });
   });
 
-  return { scene, camera, renderer, modelsToLoad };
-  // modelsToLoad veut pas export.... est-ce que c'est pcq cest un array???
+  return { scene, camera, renderer, controller1, controller2 };
 }

@@ -3,25 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>meow meow meow</title>
+  <title>Plantes reelles</title>
   <style>
     body {
-      margin: 0; 
-      overflow: hidden; 
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     canvas {
-      display: block; 
-      
+      display: block;
     }
+    #tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: none;
+  pointer-events: none;
+}
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>titre</h1>
-  </header>
   <main>
     <div id="container3D"></div>
+    <div id="tooltip"></div>
   </main>
   <script type="module" src="src/Appli.js"></script>
 </body>
