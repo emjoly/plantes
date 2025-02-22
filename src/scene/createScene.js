@@ -39,6 +39,14 @@ export function createScene() {
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
+  const testCube = new THREE.Mesh(
+    new THREE.BoxGeometry(0.5, 0.5, 0.5),
+    new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+);
+testCube.position.set(0, 1, -2);
+testCube.name = "TestCube"; // Important pour le debug
+scene.add(testCube);
+
   // modele du magasin
   const room = 'store_in_the_mall';
   const roomPosition = new THREE.Vector3(-2.5, 0, -5); // Centre de la scène
@@ -72,8 +80,6 @@ export function createScene() {
   // Charger les modèles
   modelsToLoad.forEach(({ name, position }) => {
     loadModel(scene, name, position, (obj) => {
-      // obj.userData.description = `Ceci est une plante: ${name}`;
-      // obj.name = name;
       // ce model etait trop gros
       if (name === 'rosa_chinensis') {
         obj.scale.set(0.15, 0.15, 0.15);
@@ -89,7 +95,17 @@ export function createScene() {
         obj.scale.set(2, 2, 2);
         obj.position.set(3, 0, 0);
       }
+      const boundingBox = new THREE.Box3().setFromObject(obj);
+      const size = boundingBox.getSize(new THREE.Vector3());
+      
+      const hitbox = new THREE.Mesh(
+        new THREE.BoxGeometry(size.x * 1.2, size.y * 1.2, size.z * 1.2),
+        new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.2, visible: false })
+      );
       console.log(`${name} ajouté à la scène`, position);
+      hitbox.position.copy(boundingBox.getCenter(new THREE.Vector3()));
+      hitbox.name = `${name}_hitbox`;
+      scene.add(hitbox);
     });
   });
 

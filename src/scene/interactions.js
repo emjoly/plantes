@@ -2,6 +2,7 @@ import { scene } from '../scene/createScene.js';
 import * as THREE from 'three';
 
 let raycaster = new THREE.Raycaster();
+raycaster.params.Points.threshold = 0.1;
 let intersected = [];
 
 export function setupInteractions(controller1, controller2, scene) {
@@ -18,11 +19,15 @@ function onSelectStart(event) {
     if (intersections.length > 0) {
         const intersection = intersections[0];
         const object = intersection.object;
-        object.material.emissive.b = 1;
+        
+        if (object.material && object.material.emissive) {
+            object.material.emissive.b = 1;
+        }
+        
         controller.attach(object);
         controller.userData.selected = object;
     }
-
+    
     controller.userData.targetRayMode = event.data.targetRayMode;
 }
 
@@ -31,11 +36,16 @@ function onSelectEnd(event) {
 
     if (controller.userData.selected !== undefined) {
         const object = controller.userData.selected;
-        object.material.emissive.b = 0;
+        
+        if (object.material && object.material.emissive) {
+            object.material.emissive.b = 0;
+        }
+        
         scene.attach(object);
         controller.userData.selected = undefined;
     }
 }
+
 
 function getIntersections(controller) {
   controller.updateMatrixWorld();
@@ -46,13 +56,15 @@ function getIntersections(controller) {
   raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
 
-  return raycaster.intersectObjects(scene.children, false);
+  const hitboxes = scene.children.filter(obj => obj.name.includes('_hitbox'));
+  return raycaster.intersectObjects(hitboxes, false);
 }
 
 
 function intersectObjects(controller) {
-    if (controller.userData.targetRayMode === 'screen') return;
-    if (controller.userData.selected !== undefined) return;
+    // if (controller.userData.targetRayMode === 'screen') return;
+    // if (controller.userData.selected !== undefined) return;
+    if (controller.userData.selected !== undefined) return; // Supprime la condition sur screen mode
 
     const line = controller.getObjectByName('line');
     const intersections = getIntersections(controller);
@@ -60,7 +72,16 @@ function intersectObjects(controller) {
     if (intersections.length > 0) {
         const intersection = intersections[0];
         const object = intersection.object;
-        object.material.emissive.r = 1;
+        
+        console.log("Objet touché :", object.name, object);
+        
+        if (object.material && object.material.emissive) {
+            if (!object.userData.originalEmissive) {
+                object.userData.originalEmissive = object.material.emissive.clone();
+            }
+            object.material.emissive.set(0xffffff);
+        }
+        
         intersected.push(object);
         line.scale.z = intersection.distance;
     } else {
@@ -71,7 +92,9 @@ function intersectObjects(controller) {
 function cleanIntersected() {
     while (intersected.length) {
         const object = intersected.pop();
-        object.material.emissive.r = 0;
+        if (object.userData.originalEmissive) {
+            object.material.emissive.copy(object.userData.originalEmissive);
+        }
     }
 }
 
