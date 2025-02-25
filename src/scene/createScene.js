@@ -9,13 +9,14 @@ import { setupInteractions } from './interactions.js';
 export let modelsToLoad = [];
 export let renderer;
 export let scene;
+export let camera;
 
 export function createScene() {
   // Create scene
   scene = new THREE.Scene();
 
   // Create camera
-  const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.set(0, 0, 2);  
 
   createSkybox(scene);

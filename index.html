@@ -15,23 +15,12 @@
     canvas {
       display: block;
     }
-    #tooltip {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 14px;
-  display: none;
-  pointer-events: none;
-}
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
   <main>
-    <div id="container3D"></div>
-    <div id="tooltip"></div>
+    <div id="infoBox" style="position: absolute; display: none; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 14px; max-width: 200px;"></div>
   </main>
   <script type="module" src="src/Appli.js"></script>
 </body>
