@@ -40,13 +40,13 @@ export function createScene() {
   controls.dampingFactor = 0.25;  // Facteur de lissage
   controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
 
-  const testCube = new THREE.Mesh(
-    new THREE.BoxGeometry(0.5, 0.5, 0.5),
-    new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-);
-testCube.position.set(0, 1, -2);
-testCube.name = "TestCube"; // Important pour le debug
-scene.add(testCube);
+//   const testCube = new THREE.Mesh(
+//     new THREE.BoxGeometry(0.5, 0.5, 0.5),
+//     new THREE.MeshStandardMaterial({ color: 0x00ff00 })
+// );
+// testCube.position.set(0, 1, -2);
+// testCube.name = "TestCube"; // Important pour le debug
+// scene.add(testCube);
 
   // modele du magasin
   const room = 'store_in_the_mall';
