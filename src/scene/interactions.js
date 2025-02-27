@@ -14,6 +14,40 @@ const validObjects = new Set([
     'rosa_chinensis'
 ]);
 
+// Descriptions des plantes
+const plantDescriptions = {
+    ficus: {
+        luminosite: "Lumière vive mais indirecte.",
+        arrosage: "Arrosage modéré, laissez sécher le sol entre deux arrosages.",
+        provenance: "Originaire d'Asie et d'Australie."
+    },
+    livistona_chinensis: {
+        luminosite: "Lumière indirecte modérée.",
+        arrosage: "Arrosage fréquent, gardez le sol légèrement humide.",
+        provenance: "Originaire de Chine et des îles du Pacifique."
+    },
+    pilea_peperomioides: {
+        luminosite: "Lumière vive, évitez le soleil direct.",
+        arrosage: "Arrosez dès que le sol est sec.",
+        provenance: "Originaire du sud de la Chine."
+    },
+    pothos: {
+        luminosite: "Faible à forte luminosité, supporte bien l’ombre.",
+        arrosage: "Tolérant à la sécheresse, arrosez lorsque le sol est sec.",
+        provenance: "Originaire des forêts tropicales d’Asie du Sud-Est."
+    },
+    rhyzome: {
+        luminosite: "Lumière tamisée, évitez l'exposition directe.",
+        arrosage: "Arrosez légèrement, sensible à l'excès d'eau.",
+        provenance: "Originaire des régions humides tropicales."
+    },
+    rosa_chinensis: {
+        luminosite: "Lumière directe du soleil.",
+        arrosage: "Arrosez régulièrement, mais sans excès.",
+        provenance: "Originaire de Chine."
+    }
+};
+
 export function setupInteractions(controller1, controller2, scene) {
     controller1.addEventListener('selectstart', onSelectStart);
     controller1.addEventListener('selectend', onSelectEnd);
@@ -66,7 +100,6 @@ function getIntersections(controller) {
   // console.log("Raycast direction:", raycaster.ray.direction);
     const hitboxes = scene.children.filter(obj => obj.name.includes('_hitbox'));
     return raycaster.intersectObjects(hitboxes, false);
-    
   }
 
 function intersectObjects(controller) {
@@ -115,12 +148,21 @@ function cleanIntersected() {
 }
 
 function showInfoBox(object) {
-    infoBox.style.display = 'block';
-    infoBox.innerText = `Vous regardez: ${object.name.replace('_hitbox', '')}`;
+    const plantName = object.name.replace('_hitbox', '');
+    
+    if (plantDescriptions[plantName]) {
+        const { luminosite, arrosage, provenance } = plantDescriptions[plantName];
 
-    // Placer l'info-box au centre
-    infoBox.style.left = `${window.innerWidth / 2 - infoBox.clientWidth / 2}px`;
-    infoBox.style.top = `${window.innerHeight * 0.8}px`;
+        infoBox.style.display = 'block';
+        infoBox.innerHTML = `
+            <strong>${plantName.replace('_', ' ')}</strong><br>
+            <b>Luminosité :</b> ${luminosite}<br>
+            <b>Arrosage :</b> ${arrosage}<br>
+            <b>Provenance :</b> ${provenance}
+        `;
+        infoBox.style.left = `${window.innerWidth / 2 - infoBox.clientWidth / 2}px`;
+        infoBox.style.top = `${window.innerHeight * 0.8}px`;
+    }
 }
 
 function hideInfoBox() {
