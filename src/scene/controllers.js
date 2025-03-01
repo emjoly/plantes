@@ -1,20 +1,15 @@
 import * as THREE from 'three';
-import { XRButton } from 'three/addons/webxr/XRButton.js';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
-import { createScene } from './createScene.js';
 
-// const { scene, renderer } = createScene();
 export let controller1, controller2;
 
 export function setupControllers(renderer, scene) {
     // return new Promise((resolve) => {
-    document.body.appendChild(XRButton.createButton(renderer));
-
     const controller1 = renderer.xr.getController(0);
     const controller2 = renderer.xr.getController(1);
     scene.add(controller1, controller2);
 
-    // petite ligne pour vrai ou cest aligné
+    // ligne pour voir ou cest aligné
     function addLaserLine(controller) {
         const geometry = new THREE.BufferGeometry().setFromPoints([
             new THREE.Vector3(0, 0, 0),
@@ -43,7 +38,6 @@ export function setupControllers(renderer, scene) {
     scene.add(controllerGrip2);
 
     return{ controller1, controller2 }; 
-    // });
 }
 
 

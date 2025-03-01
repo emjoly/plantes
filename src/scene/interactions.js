@@ -63,14 +63,9 @@ function onSelectStart(event) {
         const intersection = intersections[0];
         const object = intersection.object;
         
-        if (object.material && object.material.emissive) {
-            object.material.emissive.b = 1;
-        }
-        
         controller.attach(object);
         controller.userData.selected = object;
     }
-    
     controller.userData.targetRayMode = event.data.targetRayMode;
 }
 
@@ -79,10 +74,6 @@ function onSelectEnd(event) {
 
     if (controller.userData.selected !== undefined) {
         const object = controller.userData.selected;
-        
-        if (object.material && object.material.emissive) {
-            object.material.emissive.b = 0;
-        }
         
         scene.attach(object);
         controller.userData.selected = undefined;
@@ -97,7 +88,7 @@ function getIntersections(controller) {
   
     raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
     raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-  // console.log("Raycast direction:", raycaster.ray.direction);
+    // console.log("Raycast direction:", raycaster.ray.direction);
     const hitboxes = scene.children.filter(obj => obj.name.includes('_hitbox'));
     return raycaster.intersectObjects(hitboxes, false);
   }
@@ -118,13 +109,6 @@ function intersectObjects(controller) {
         }
         
         console.log("Objet touché :", object.name, object);
-        
-        if (object.material && object.material.emissive) {
-            if (!object.userData.originalEmissive) {
-                object.userData.originalEmissive = object.material.emissive.clone();
-            }
-            object.material.emissive.set(0xffffff);
-        }
         
         intersected.push(object);
         line.scale.z = intersection.distance;

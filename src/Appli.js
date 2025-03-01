@@ -4,8 +4,6 @@ import { createSkybox } from './utils/skybox.js';
 import { setupVRButton } from './scene/VRButton.js';
 import { handleResize } from './scene/fenetre.js';
 
-import * as THREE from 'three';
-
 // Initialize the scene
 const { scene, camera, renderer, controller1, controller2 } = createScene();
 

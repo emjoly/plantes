@@ -12,17 +12,17 @@ export let scene;
 export let camera;
 
 export function createScene() {
-  // Create scene
-  scene = new THREE.Scene();
+  scene = new THREE.Scene(); // Create scene
 
   // Create camera
   camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.set(0, 0, 2);  
+  scene.userData.camera = camera;
 
   createSkybox(scene);
 
   // Create renderer
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.xr.enabled = true;
   document.body.appendChild(renderer.domElement);
@@ -36,17 +36,9 @@ export function createScene() {
 
   // orbit controls cam
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;  // Activer le damping pour une interaction plus fluide
-  controls.dampingFactor = 0.25;  // Facteur de lissage
-  controls.screenSpacePanning = false; // Désactiver le défilement de la souris pour le zoom
-
-//   const testCube = new THREE.Mesh(
-//     new THREE.BoxGeometry(0.5, 0.5, 0.5),
-//     new THREE.MeshStandardMaterial({ color: 0x00ff00 })
-// );
-// testCube.position.set(0, 1, -2);
-// testCube.name = "TestCube"; // Important pour le debug
-// scene.add(testCube);
+  controls.enableDamping = true;  // interaction plus fluide
+  controls.dampingFactor = 0.25;  // lissage
+  controls.screenSpacePanning = false; // Désactiver défilement pour le zoom
 
   // modele du magasin
   const room = 'store_in_the_mall';
