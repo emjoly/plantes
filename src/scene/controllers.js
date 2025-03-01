@@ -1,30 +1,49 @@
 import * as THREE from 'three';
 import { XRButton } from 'three/addons/webxr/XRButton.js';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
-import { scene, renderer } from './createScene.js';
+import { createScene } from './createScene.js';
 
+// const { scene, renderer } = createScene();
 export let controller1, controller2;
 
-export function initControls() {
-    return new Promise((resolve) => {
-        document.body.appendChild(XRButton.createButton(renderer));
+export function setupControllers(renderer, scene) {
+    // return new Promise((resolve) => {
+    document.body.appendChild(XRButton.createButton(renderer));
 
-        controller1 = renderer.xr.getController(0);
-        controller2 = renderer.xr.getController(1);
-        scene.add(controller1, controller2);
+    const controller1 = renderer.xr.getController(0);
+    const controller2 = renderer.xr.getController(1);
+    scene.add(controller1, controller2);
 
-        const controllerModelFactory = new XRControllerModelFactory();
+    // petite ligne pour vrai ou cest aligné
+    function addLaserLine(controller) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 0, -1) // Ligne pointant vers l'avant
+        ]);
 
-        const controllerGrip1 = renderer.xr.getControllerGrip(0);
-        controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
-        scene.add(controllerGrip1);
+        const material = new THREE.LineBasicMaterial({ color: 0xffffff });
+        const line = new THREE.Line(geometry, material);
+        line.name = 'line';
+        line.scale.z = 5; // Longueur initiale
 
-        const controllerGrip2 = renderer.xr.getControllerGrip(1);
-        controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
-        scene.add(controllerGrip2);
+        controller.add(line); // Attacher la ligne au contrôleur
+    }
 
-        resolve(); // Indique que les contrôleurs sont prêts
-    });
+    addLaserLine(controller1);
+    addLaserLine(controller2);
+
+    const controllerModelFactory = new XRControllerModelFactory();
+
+    const controllerGrip1 = renderer.xr.getControllerGrip(0);
+    controllerGrip1.add(controllerModelFactory.createControllerModel(controllerGrip1));
+    scene.add(controllerGrip1);
+
+    const controllerGrip2 = renderer.xr.getControllerGrip(1);
+    controllerGrip2.add(controllerModelFactory.createControllerModel(controllerGrip2));
+    scene.add(controllerGrip2);
+
+    return{ controller1, controller2 }; 
+    // });
 }
 
 

@@ -1,29 +1,22 @@
-import { createScene, renderer, camera, scene } from './scene/createScene.js';
-import { initControls } from './scene/controllers.js';
-import { onWindowResize, animate } from './scene/fenetre.js';
-import { XRButton } from 'three/addons/webxr/XRButton.js';
+import { createScene } from './scene/createScene.js';
+import { animate } from './scene/animation.js';
+import { createSkybox } from './utils/skybox.js';
+import { setupVRButton } from './scene/VRButton.js';
+import { handleResize } from './scene/fenetre.js';
 
-// Création de la scène
-createScene();
+import * as THREE from 'three';
 
-// Ajout du bouton WebXR après le rendu classique
-document.body.appendChild(XRButton.createButton(renderer));
+// Initialize the scene
+const { scene, camera, renderer, controller1, controller2 } = createScene();
 
-// Démarrage des contrôles XR
-initControls().then(() => {
-    renderer.xr.enabled = true; // Activer WebXR uniquement après l'init des contrôleurs
-    renderer.setAnimationLoop(animate);
-});
+// Ajouter la skybox
+createSkybox(scene);
 
-// Boucle de rendu normale avant d’activer WebXR
-function normalRenderLoop() {
-    if (!renderer.xr.isPresenting) {
-        animate();
-    }
-    requestAnimationFrame(normalRenderLoop);
-}
+// Set up WebXR
+setupVRButton(renderer);
 
-normalRenderLoop(); // Démarrer le rendu normal
+// Handle window resizing
+handleResize(camera, renderer);
 
-// Écouteur pour le redimensionnement de la fenêtre
-window.addEventListener('resize', onWindowResize);
+// Start animation loop
+animate(scene, camera, renderer, controller1, controller2);

@@ -1,25 +1,24 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-const group = new THREE.Group();
-let isInitialized = false;
+export function loadModel(scene, modelName, position = new THREE.Vector3(0, 0, 0), onLoadCallback) {
+    const loader = new GLTFLoader();
 
-export function getGroup() {
-    if (!isInitialized) {
-        const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x00ff00,
-            roughness: 0.7,
-            metalness: 0.0
-        });
-        const object = new THREE.Mesh(geometry, material);
-        object.position.set(0, 1, -1);
-
-        object.castShadow = true;
-        object.receiveShadow = true;
-
-        group.add(object);
-        isInitialized = true;
-    }
-    return group;
+    loader.load(
+        `src/assets/${modelName}/scene.gltf`,
+        function(gltf){
+            // si loaded, ajouter a la scene
+            const object = gltf.scene;
+            object.position.copy(position)
+            scene.add(object);
+            if (onLoadCallback) onLoadCallback(object);
+        },
+        function (xhr){
+            // log progres pendant le download
+            console.log((xhr.loaded / xhr.total*100)+ '%loaded');
+        },
+        function(error){
+            console.log(error);
+        }
+    );
 }
