@@ -1,0 +1,475 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 2184,
+      "max": [
+        0.11781273782253265,
+        0.11761936545372009,
+        0.19795916974544525
+      ],
+      "min": [
+        -0.1173444539308548,
+        -0.11753300577402115,
+        -0.0016825561178848147
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 26208,
+      "componentType": 5126,
+      "count": 2184,
+      "max": [
+        0.9996890425682068,
+        0.999688982963562,
+        1.0
+      ],
+      "min": [
+        -0.9996893405914307,
+        -0.999688982963562,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 2184,
+      "max": [
+        0.9997726082801819,
+        0.9981398582458496,
+        0.9829210042953491,
+        1.0
+      ],
+      "min": [
+        -0.997651994228363,
+        -0.9994396567344666,
+        -0.9999710917472839,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 2184,
+      "max": [
+        0.9802647233009338,
+        0.9912119507789612
+      ],
+      "min": [
+        0.00020400836365297437,
+        0.00020400836365297437
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 17472,
+      "componentType": 5126,
+      "count": 2184,
+      "max": [
+        0.9802647233009338,
+        0.9912119507789612
+      ],
+      "min": [
+        0.00020400836365297437,
+        0.00020400836365297437
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 34944,
+      "componentType": 5126,
+      "count": 2184,
+      "max": [
+        0.9802647233009338,
+        0.9912119507789612
+      ],
+      "min": [
+        0.00020400836365297437,
+        0.00020400836365297437
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 11808,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 52416,
+      "componentType": 5126,
+      "count": 6896,
+      "max": [
+        0.19183498620986938,
+        0.1781293898820877,
+        0.4765791893005371
+      ],
+      "min": [
+        -0.17612215876579285,
+        -0.1674342304468155,
+        0.16304904222488403
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 135168,
+      "componentType": 5126,
+      "count": 6896,
+      "max": [
+        0.9998504519462585,
+        0.9997826814651489,
+        0.9999634027481079
+      ],
+      "min": [
+        -0.9999493956565857,
+        -0.9999307990074158,
+        -0.9847416877746582
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 34944,
+      "componentType": 5126,
+      "count": 6896,
+      "max": [
+        0.9999833703041077,
+        0.9999049305915833,
+        0.6938928365707397,
+        1.0
+      ],
+      "min": [
+        -0.9999855160713196,
+        -0.9998534321784973,
+        -0.999780535697937,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 52416,
+      "componentType": 5126,
+      "count": 6896,
+      "max": [
+        0.9587506055831909,
+        0.9664860367774963
+      ],
+      "min": [
+        0.06097500026226044,
+        0.04612955451011658
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 47232,
+      "componentType": 5125,
+      "count": 34500,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "AllQuad (https://sketchfab.com/AllQuad)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/free-pilea-peperomioides-terracotta-pot-891b276aa29b4c42a0e3bc476203cb9b",
+      "title": "[FREE] Pilea Peperomioides Terracotta pot"
+    },
+    "generator": "Sketchfab-14.86.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 185232,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 107584,
+      "byteOffset": 185232,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 217920,
+      "byteOffset": 292816,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 145280,
+      "byteOffset": 510736,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 656016,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/POT_TERRACOTTA_SMALL_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/POT_TERRACOTTA_SMALL_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/POT_TERRACOTTA_SMALL_normal.jpeg"
+    },
+    {
+      "uri": "textures/PILEA_Mat_baseColor.png"
+    },
+    {
+      "uri": "textures/PILEA_Mat_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/PILEA_Mat_normal.jpeg"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "POT_TERRACOTTA_SMALL",
+      "normalTexture": {
+        "index": 2
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "name": "PILEA_Mat",
+      "normalTexture": {
+        "index": 5
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicFactor": 0.0,
+        "metallicRoughnessTexture": {
+          "index": 4
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "POT_TERRACOTTA_SMALL_POT_TERRACOTTA_SMALL_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4,
+            "TEXCOORD_2": 5
+          },
+          "indices": 6,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "PILEA_PEPEROMIOIDES_PILEA_Mat_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 8,
+            "POSITION": 7,
+            "TANGENT": 9,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "dd3c0dc147c94b64b13dc7d8a4102d00.fbx"
+    },
+    {
+      "children": [
+        3,
+        5
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.629206793918314e-05,
+        -99.99999999999868,
+        0.0,
+        0.0,
+        99.99999999999868,
+        -1.629206793918314e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "POT_TERRACOTTA_SMALL"
+    },
+    {
+      "mesh": 0,
+      "name": "POT_TERRACOTTA_SMALL_POT_TERRACOTTA_SMALL_0"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.629206793918314e-05,
+        -99.99999999999868,
+        0.0,
+        0.0,
+        99.99999999999868,
+        -1.629206793918314e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "PILEA_PEPEROMIOIDES"
+    },
+    {
+      "mesh": 1,
+      "name": "PILEA_PEPEROMIOIDES_PILEA_Mat_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}
