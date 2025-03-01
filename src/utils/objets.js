@@ -4,8 +4,10 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 export function loadModel(scene, modelName, position = new THREE.Vector3(0, 0, 0), onLoadCallback) {
     const loader = new GLTFLoader();
 
+    const modelPath = `${import.meta.env.BASE_URL}assets/${modelName}/scene.gltf`;
+
     loader.load(
-        `src/assets/${modelName}/scene.gltf`,
+        modelPath,
         function(gltf){
             // si loaded, ajouter a la scene
             const object = gltf.scene;
